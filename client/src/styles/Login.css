@@ -1,0 +1,31 @@
+.login{
+  width: 100%;
+  height: 100vh;
+  background-color: #4285F4;
+  /* background: linear-gradient(to left, #4285F4 0%,  #9A33FF 100%); */
+  background-image: url('i.jpg');
+  background-position: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login h2{
+  color: white;
+  text-align: center;
+  margin-bottom: 50px;
+}
+#google-btn{
+    width: 25%;
+    cursor: pointer;
+    height: 40px;
+    background-color: black;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 9px;
+    font-size: 25px;
+    font-family: fantasy;
+    outline-style: none;
+    border: none;
+    margin: 0 auto;
+  }

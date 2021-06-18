@@ -1,0 +1,47 @@
+.noti{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.noti:hover{
+    background-color: #9A33FF;
+}
+.notiImg{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+.notiName{
+    font-weight: 600;
+    color: white;
+}
+/* .noti:hover .notiName{
+    color: black;
+} */
+.notip{
+    color: white;
+    max-width: 200px;
+    font-weight: lighter;
+}
+/* .noti:hover .notip{
+    color: black;
+} */
+.notibtn{
+    height: 40px;
+    width: 150px;
+    color: white;
+    font-weight: 500;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 10px;
+}
+/* .noti:hover .notibtn{
+    color: black;
+    border: 1px solid black;
+} */

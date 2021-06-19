@@ -10,11 +10,16 @@ function App() {
   const isLogin = useSelector(state => state.isLogin);
 
   useEffect(() => {
-    if(localStorage.getItem("googleID") == 'no'){
-        dispatch({type:"LOGOUT"});
+    if(localStorage.getItem("googleID") !== null){
+        if(localStorage.getItem("googleID") == 'no'){
+          dispatch({type:"LOGOUT"});
+        }
+        else{
+          dispatch({type:"LOGIN"});
+        }
     }
     else{
-       dispatch({type:"LOGIN"});
+      dispatch({type:"LOGOUT"});
     }
   }, [])
 

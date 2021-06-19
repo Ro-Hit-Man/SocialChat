@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function Messenger() {
 
+    var online = false;
     const [id, setid] = useState("");
     const [users, setusers] = useState([]);
     const [req, setreq] = useState([]);
@@ -24,6 +25,7 @@ export default function Messenger() {
     const rid = useSelector(state => state.isRID);
     const [message, setmessage] = useState("");
     const [arrivalmessage, setarrivalmessage] = useState("");
+    const [onlineUsers, setonlineUsers] = useState([]);
     var gid = localStorage.getItem("googleID");
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -57,14 +59,18 @@ export default function Messenger() {
         });
         axios.post(baseUrl+'getRequested',{gid}).then((res)=>{
              setreq(res.data.data);
+            // console.log(res.data);
         });
         axios.post(baseUrl+'gotRequested',{gid}).then((res)=>{
+            // console.log(res.data);
              setreq2(res.data.data);
          });
          axios.post(baseUrl+'getConversation1',{gid}).then((res)=>{
+            // console.log(res.data);
              setcon1(res.data.data);
          });
          axios.post(baseUrl+'getConversation2',{gid}).then((res)=>{
+            // console.log(res.data);
              setcon2(res.data.data);
          });
          
@@ -93,7 +99,7 @@ export default function Messenger() {
     useEffect(() => {
         socket.current.emit("addUser", id);
         socket.current.on("getUsers", (users)=>{
-            // console.log(users);
+            setonlineUsers(users);
         });
     }, [id]);
 
@@ -133,10 +139,14 @@ export default function Messenger() {
     var conversationList = users.map((u)=>{
         if(u.googleId !=gid){
             if(member.includes(u._id)){
+                if(u._id === onlineUsers.userId){
+                    online = true;
+                }
                 return <Conversation key={u._id}
                             name={u.name}
                             img={u.img}
                             id={u._id}
+                            online={online}
                         />                
             }
         }

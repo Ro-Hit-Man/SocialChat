@@ -9,7 +9,7 @@ import Notification2 from './Notification2';
 export default function Header() {
 
     const dispatch = useDispatch();
-    const [req, setreq] = useState([]);
+    const [req1, setreq1] = useState([]);
     const [req2, setreq2] = useState([]);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -18,35 +18,41 @@ export default function Header() {
     useEffect(() => {
         var gid = localStorage.getItem("googleID");
        axios.post(baseUrl+'getRequested',{gid}).then((res)=>{
-            setreq(res.data.data);
+            setreq1(res.data.data);
+            console.log(req1);
        });
        axios.post(baseUrl+'gotRequested',{gid}).then((res)=>{
-        setreq2(res.data.data);
-   });
+            setreq2(res.data.data);
+        });
     }, []);
 
-    var reqList = req.map((r)=>{
-        return <Notification 
-                    id={r.requestedTo}
-                />
-    });
-    var reqList2 = req2.map((r)=>{
-        return <Notification2 
-                    id={r.requestedBy}
-                />
-    });
+    function logout(){
+        localStorage.setItem("googleID","no");
+        dispatch({type:"LOGOUT"});
+        dispatch({type:"NO_C_ID"});
+        dispatch({type:"UNDONE"});
+    }
 
     return (
         <div className='header'>
             <h1>Messenger</h1>
             <div>
             <button onClick={handleShow}>Notification</button>
-            <button onClick={()=>{localStorage.setItem("googleID","no"); dispatch({type:"LOGOUT"}); dispatch({type:"NO_C_ID"}); dispatch({type:"UNDONE"});}}>Logout</button></div>
+            <button onClick={()=>{logout()}}>Logout</button>
+            </div>
 
             {show?<div className='notification'>
                 <div className='notificationDiv'>
-                    {reqList}
-                    {reqList2}
+                    {req1.map((r)=>{
+                        return <Notification 
+                                    id={r.requestedTo}
+                                />
+                    })}
+                    {req2.map((r)=>{
+                        return <Notification2 
+                                    id={r.requestedBy}
+                                />
+                    })}
                 </div>
                 <button className='notificationbtn' onClick={handleClose}>Close</button>
             </div>:""}

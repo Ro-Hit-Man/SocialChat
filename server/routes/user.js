@@ -50,14 +50,15 @@ router.post('/request',bodyParser.json(),async (req,res)=>{
 router.post('/getRequested',bodyParser.json(), async (req,res)=>{
   try{
     const user = await User.findOne({googleId:req.body.gid});
-    var id = user._id;
-    const request = await Request.find({requestedBy : id});
+    var uid = user._id;
+    const request = await Request.find({requestedBy : uid});
     if(!request){
     res.send({status:'201', data:"No requests"});
     }else{
     res.send({status:'201', data:request});
     }
   } catch (err) {
+    console.log(err);
     res.send({status:'500', data:err});
   }
 });
@@ -65,14 +66,15 @@ router.post('/getRequested',bodyParser.json(), async (req,res)=>{
 router.post('/gotRequested',bodyParser.json(), async (req,res)=>{
   try{
     const user = await User.findOne({googleId:req.body.gid});
-    var id = user._id;
-    const request = await Request.find({requestedTo : id});
+    var uid = user._id;
+    const request = await Request.find({requestedTo : uid});
     if(!request){
     res.send({status:'201', data:"No requests"});
     }else{
     res.send({status:'201', data:request});
     }
   } catch (err) {
+    console.log(err);
     res.send({status:'500', data:err});
   }
 });
@@ -113,14 +115,15 @@ router.post('/accept',bodyParser.json(), async (req,res)=>{
 router.post('/getConversation1',bodyParser.json(), async (req,res)=>{
   try{
       const user = await User.findOne({googleId:req.body.gid});
-      var id = user._id;
-      const conversation = await Conversation.find({member1 : id});
+      var uid = user._id;
+      const conversation = await Conversation.find({member1 : uid});
       if(!conversation){
         res.send({status:'201', data:"No conversation"});
       }else{
         res.send({status:'201', data:conversation});
       }
     } catch (err) {
+        console.log(err);
         res.send({status:'500', data:err});
     }
 });
@@ -128,14 +131,15 @@ router.post('/getConversation1',bodyParser.json(), async (req,res)=>{
 router.post('/getConversation2',bodyParser.json(), async (req,res)=>{
   try{
       const user = await User.findOne({googleId:req.body.gid});
-      var id = user._id;
-      const conversation = await Conversation.find({member2 : id});
+      var uid = user._id;
+      const conversation = await Conversation.find({member2 : uid});
       if(!conversation){
         res.send({status:'201', data:"No conversation"});
       }else{
         res.send({status:'201', data:conversation});
       }
     } catch (err) {
+      console.log(err);
         res.send({status:'500', data:err});
     }
 });

@@ -8,7 +8,8 @@ export default function Conversation({
     name,
     img,
     id,
-    cid
+    cid,
+    online
 }) {
 
     var gid = localStorage.getItem("googleID");
@@ -24,18 +25,20 @@ export default function Conversation({
         axios.post(baseUrl+'getConversation2',{gid}).then((res)=>{
             setcon2(res.data.data);
         });
-    }, []);
+    });
 
     function checkCID(uid){
         con1.map((c)=>{
-            if(c.member2 == uid){
+            if(c.member2 === uid){
                 cid = c._id;
             }
+            return 1;
         });
         con2.map((c)=>{
-            if(c.member1 == uid){
+            if(c.member1 === uid){
                 cid = c._id;
             }
+            return 1;
         });
         dispatch({type:"C_ID",payload:cid});
         dispatch({type:"R_ID",payload:uid});
@@ -45,6 +48,7 @@ export default function Conversation({
 
     return (
         <div className='conversation' onClick={()=>{checkCID(id)}}>
+           {online?<div className='online'></div>:""}
             <img className='conversationImg' src={img} alt=''></img>
             <span className='conversationName'>{name}</span>
         </div>

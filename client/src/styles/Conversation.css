@@ -4,6 +4,7 @@
     padding: 10px;
     margin-top: 20px;
     cursor: pointer;
+    position: relative;
 }
 .conversation:hover{
     background-color: #9A33FF;
@@ -18,4 +19,12 @@
 .conversationName{
     font-weight: 600;
     color: white;
+}
+.online{
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #15E582;
+    position: absolute;
+    top: 10px;
 }

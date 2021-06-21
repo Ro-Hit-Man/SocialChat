@@ -8,6 +8,7 @@ import Notification2 from './Notification2';
 
 export default function Header() {
 
+    var count = 0;
     const dispatch = useDispatch();
     const [req1, setreq1] = useState([]);
     const [req2, setreq2] = useState([]);
@@ -16,15 +17,29 @@ export default function Header() {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        var gid = localStorage.getItem("googleID");
+       var gid = localStorage.getItem("googleID");
        axios.post(baseUrl+'getRequested',{gid}).then((res)=>{
             setreq1(res.data.data);
-            console.log(req1);
        });
        axios.post(baseUrl+'gotRequested',{gid}).then((res)=>{
             setreq2(res.data.data);
         });
-    }, []);
+    });
+
+    count = req1.length + req2.length;
+
+    var reqList1 = req1.map((r)=>{
+        return <Notification 
+                    id={r.requestedTo}
+                />
+    });
+
+    var reqList2 = req2.map((r)=>{
+        return <Notification2 
+                    id={r.requestedBy}
+                />
+    });
+     
 
     function logout(){
         localStorage.setItem("googleID","no");
@@ -36,23 +51,16 @@ export default function Header() {
     return (
         <div className='header'>
             <h1>Messenger</h1>
-            <div>
+            <div className='btn-div'>
             <button onClick={handleShow}>Notification</button>
+            <div className='noti-noti'><span>{count}</span></div>
             <button onClick={()=>{logout()}}>Logout</button>
             </div>
 
             {show?<div className='notification'>
                 <div className='notificationDiv'>
-                    {req1.map((r)=>{
-                        return <Notification 
-                                    id={r.requestedTo}
-                                />
-                    })}
-                    {req2.map((r)=>{
-                        return <Notification2 
-                                    id={r.requestedBy}
-                                />
-                    })}
+                    {reqList1}
+                    {reqList2}
                 </div>
                 <button className='notificationbtn' onClick={handleClose}>Close</button>
             </div>:""}

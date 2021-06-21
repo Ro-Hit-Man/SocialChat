@@ -9,7 +9,7 @@ export default function Notification({
 
     const [user, setuser] = useState([]);
 
-    useEffect((id) => {
+    useEffect(() => {
         axios.post(baseUrl+'getUser',{id:id}).then((res)=>{
             setuser(res.data.data);
        });
